@@ -1,221 +1,306 @@
-# Cybersecurity-Ethical-Hacking-Lab
+# PENETRATION-TESTING-REPORT
+## FOOTPRINTING & NETWORK SCANNING
 
-Practical cybersecurity lab environment using VirtualBox, Kali Linux, Windows VMs, NAT networking, IP configuration, connectivity testing, and VM snapshots.
-
-# Cybersecurity & Ethical Hacking Lab Environment
-
-## Overview
-
-This repository documents my hands-on setup of a practical Cybersecurity, Ethical Hacking, and Penetration Testing Lab Environment using virtual machines and VirtualBox.
-
-The lab was created as an isolated environment for practicing cybersecurity concepts, network configuration, ethical hacking techniques, penetration testing, and future CTF-based exercises.
-
-The setup follows a two-phase approach covering the installation and configuration of VirtualBox, Kali Linux, Windows virtual machines, network configuration, IP addressing, connectivity testing, and VM snapshots.
-
-## Lab Objectives
-
-- Build an isolated cybersecurity practice environment.
-- Configure VirtualBox networking using a custom NAT Network.
-- Install and configure Kali Linux.
-- Configure Windows virtual machines for security testing.
-- Assign and verify IP configurations.
-- Test connectivity between virtual machines.
-- Create VM snapshots for safe experimentation and rollback.
-- Prepare the environment for future CTF and penetration-testing labs.
+**Week 2 • Cybersecurity / Ethical Hacking Practical**
 
 ---
 
-## Lab Environment & Specifications
+## 📋 Report Details
 
-### Virtualization
+| Report Field | Details |
+| :--- | :--- |
+| **Analyst** | Tajalla Fatima |
+| **Practical Focus** | Footprinting & reconnaissance, network discovery |
+| **Primary Platforms** | Kali Linux and Windows |
+| **Tools Covered** | WHOIS, WhatWeb, Nslookup, Curl, Wafw00f, DNSRecon, Zenmap |
+| **Assessment Scope** | Authorized educational lab / controlled environment |
+| **Sanitization** | Live IPs, domains, emails and other identifiers replaced with documentation-safe values |
+| **Report Status** | Sanitized submission-ready draft |
 
-- **Hypervisor:** Oracle VirtualBox
-- **Archive Utility:** 7-Zip
-- **Virtual Machines:** Multiple Virtual Machines
-
-### Operating Systems
-
-- **Attacker OS:** Kali Linux
-- **Target OS:** Windows 10/11/7
-- **Android VM:** Optional
-
-### Network
-
-- **Network Type:** NAT Network
-- **Network Subnet:** `10.0.0.0/24`
-- **Configured IP Range:** `10.0.0.2` – `10.0.0.99`
+> **Authorization & Safety Notice:**  
+> All reconnaissance and scanning activities described in this report are presented as authorized educational exercises. The report uses documentation-only values so that the final document does not expose live infrastructure details. Prepared for educational and portfolio use.
 
 ---
 
-## Network Topology
+# 1. Executive Summary
 
-The general lab architecture is structured as follows:
+This practical exercise covered two complementary cybersecurity activities: passive and low-impact footprinting of a web-domain environment, followed by local network discovery with Zenmap. The work demonstrated how a security professional can move from publicly observable information to a structured view of hosts and services without attempting exploitation.
 
-<pre>
-                 Host Machine
-                     |
-               VirtualBox
-                     |
-              NAT Network
-             10.0.0.0/24
-                     |
-       +-------------+-------------+
-       |             |             |
-     Kali         Windows       Android
-   Linux VM         VM            VM
-       |             |             |
-       +-------------+-------------+
-              Connectivity Tests
-</pre>
+The practical evidence included the use of WHOIS, WhatWeb, Nslookup, Curl, Wafw00f and DNSRecon for reconnaissance activities.
 
-### Example IP Configuration
+## Key Outcomes
 
-The lab uses the `10.0.0.0/24` network. The following IP addresses represent example configurations for the virtual machines in the lab:
-
-| Machine | Example IP |
-|---|---|
-| Kali Linux | `10.0.0.2` |
-| VM 2 | `10.0.0.10` |
-| VM 3 | `10.0.0.7` |
-| VM 4 | `10.0.0.16` |
-| VM 5 | `10.0.0.9` |
-| VM 6 | `10.0.0.11` |
+| Area | Outcome |
+| :--- | :--- |
+| **Domain Footprinting** | Collected registration, DNS, web-technology, HTTP-header and WAF observations using Kali Linux tools. |
+| **Network Discovery** | Practiced network discovery and service identification in an authorized lab environment. |
+| **Risk Interpretation** | Converted observations into potential security considerations without automatically treating every observation as a vulnerability. |
+| **Data Protection** | Used documentation-safe values for the final report. |
 
 ---
 
-#  🌸 Phase 1 – Kali Linux Setup & Proof of Work
+# 2. Objectives
 
-## Step 1: Install 7-Zip & Setup VirtualBox
-
-7-Zip was installed to extract and manage downloaded virtual machine files. Oracle VirtualBox was installed as the virtualization platform. The Kali Linux VM (`kali-linux-2026.2-virtualbox-amd64`) was imported with 2048 MB RAM and 2 Processors allocated.
-
-
----
-
-## Step 2: Configure Custom NAT Network
-
-A custom NAT Network named `NatNetwork` was created in VirtualBox using the `10.0.0.0/24` IPv4 CIDR prefix with DHCP enabled.
-
-![NAT Network Configuration](nat-network.png)
+- Understand the purpose of footprinting before active security testing.
+- Practice common Kali Linux reconnaissance commands and interpret their outputs.
+- Understand DNS and web-technology reconnaissance.
+- Practice HTTP header inspection.
+- Understand Web Application Firewall detection.
+- Understand DNS enumeration.
+- Use network scanning concepts in an authorized lab environment.
+- Document evidence, security implications and recommendations professionally.
+- Produce a sanitized cybersecurity practical report.
 
 ---
 
-## Step 3: Configure Kali Linux Network Connection
+# 3. Scope, Authorization & Methodology
 
-Kali Linux was configured manually to communicate through the custom NAT Network using static network parameters:
+The activities described in this report are framed as an authorized educational cybersecurity lab.
 
-- **IPv4 Address:** `10.0.0.2`
-- **Netmask:** `24` (`255.255.255.0`)
-- **Gateway:** `10.0.0.1`
-- **DNS Server:** `8.8.8.8`
+Testing was limited to systems and environments for which authorization was available.
 
-![Kali Linux Network Configuration](kali-network.png)
+| Phase | Module | Activity | Primary Tools | Evidence Type |
+| :--- | :--- | :--- | :--- | :--- |
+| **Phase 1** | W2-PM1 | Footprinting / Reconnaissance | WHOIS, WhatWeb, Nslookup, Curl, Wafw00f, DNSRecon | Terminal outputs |
+| **Phase 2** | W2-PM5 | Network Discovery | ipconfig, Zenmap/Nmap | Scan output |
+| **Phase 3** | W2-PM-FINAL | Risk Interpretation | Manual analysis | Risk register |
+| **Phase 4** | W2-PM-FINAL | Recommendations | Manual analysis | Mitigation guidance |
 
----
+## Sanitization Standard
 
-## Step 4: Verify IP Interface Configuration
+To reduce accidental data exposure, this report uses documentation-safe domains, IP addresses and identifiers.
 
-Assigned IPv4 configurations were verified inside the Kali Linux terminal using `ip a`. The `eth0` network adapter successfully bound to `10.0.0.2/24`.
+Example documentation range:
 
-![IP Interface Verification](ip-interface-verification.png)
+`192.0.2.0/24`
 
----
-
-## Step 5: Test Connectivity & Network Routing
-
-Tested internet reachability and NAT gateway routing inside Kali Linux by accessing external web destinations via the browser.
-
-![Connectivity and Network Routing Test](connectivity-network-test.png)
+> **Important:** Sanitized values are placeholders for documentation and do not represent real-world target systems.
 
 ---
 
-## Step 6: Create VM Snapshot
+# 4. Tools Used
 
-A snapshot of the configured Kali Linux VM was created to provide a restore point before performing security experiments. The snapshot was named `Kali setup` with the description `Setting up IP address`.
-
-![Kali Linux VM Snapshot](kali-vm-snapshot.png)
-
----
-
-# Kali Linux Connectivity Troubleshooting
-
-During the setup, if Internet connectivity issues occur with Kali Linux 2026.1 or later due to Duplicate Address Detection (DAD) timeouts, the following command can be used:
-
-`sudo nmcli connection modify "eth0" ipv4.dad-timeout 0`
-
-The setup also utilizes `10.0.0.1` as the gateway address if Internet connectivity requires static routing.
+| Tool | Module | Purpose |
+| :--- | :--- | :--- |
+| **Kali Linux** | W2-PM1 | Operating environment for reconnaissance commands. |
+| **WHOIS** | W2-PM1 | Review publicly available domain-registration information and name servers. |
+| **WhatWeb** | W2-PM1 | Fingerprint web technologies and server/application indicators. |
+| **Nslookup** | W2-PM1 | Resolve a domain name through DNS. |
+| **Curl -I** | W2-PM1 | Inspect HTTP response headers. |
+| **Wafw00f** | W2-PM1 | Identify detectable Web Application Firewall protection. |
+| **DNSRecon** | W2-PM1 | Enumerate DNS record information. |
+| **Zenmap / Nmap** | W2-PM5 | Discover live hosts and visible services in an authorized network. |
+| **Windows ipconfig** | W2-PM5 | Identify local host IP configuration before scanning. |
 
 ---
 
-# Virtual Machine Snapshots
+# 5. Module W2-PM1: Footprinting & Reconnaissance
 
-Snapshots were created after configuring the virtual machines. Snapshots are useful in a cybersecurity lab because they allow the environment to be restored to a known working state after performing potentially disruptive experiments.
-
-### Recommended Snapshot Points
-
-- Fresh OS installation
-- Network configuration completed
-- Kali Linux configured
-- Target machine configured
-- Pre-exploitation state
+The footprinting phase utilized six Kali Linux reconnaissance tools to examine registration information, DNS information, web technologies, HTTP metadata and WAF detection.
 
 ---
 
-# Connectivity Testing
+## **5.1 WHOIS**
 
-Connectivity between the virtual machines can be verified using ICMP echo requests:
+### **Objective**
 
-`ping 10.0.0.X`
+Identify publicly available domain-registration information and authoritative name servers.
 
-The `10.0.0.X` address should be replaced with the actual IP address of the virtual machine being tested.
+### **Command**
 
----
+```bash
+whois example-lab.invalid
+```
 
-# Skills Demonstrated
+![WHOIS](images/whois.png)
 
-This project demonstrates practical experience with:
-
-- VirtualBox and virtual machine deployment
-- Kali Linux and Windows virtual machine configuration
-- NAT Network configuration and IPv4 addressing
-- Basic network troubleshooting and interface commands (`ip a`, `nmcli`, `ping`)
-- VM snapshots and state persistence
-- Virtualized cybersecurity lab environment preparation
-- Ethical hacking environment setup
+1. **Sanitized Observation:** Demonstrated that WHOIS exposes registrar details, domain status, and name-server configurations.
+2. **Security Relevance:** Provides structural and administrative context regarding target domain ownership.
 
 ---
 
-# Future Labs
+## **5.2 WhatWeb**
 
-This environment can be extended for practical cybersecurity exercises such as:
+### **Objective**
 
-- Network reconnaissance
-- Vulnerability assessment
-- Web application security testing
-- Network security testing
-- Exploitation in controlled environments
-- Digital forensics exercises
-- Capture The Flag (CTF) challenges
-- Security monitoring and analysis
+Fingerprint web technologies exposed by the target web application.
 
-Additional offline virtual machines may be added for future CTF practical labs and challenges.
+### **Command**
 
----
+```bash
+whatweb example-lab.invalid
+```
 
-# Disclaimer
+![WhatWeb](images/whatweb.png)
 
-This repository is intended for educational and authorized cybersecurity testing only. All security testing should be performed only against systems and networks that you own or have explicit permission to test.
+1. **Sanitized Observation:** Identified web server components, CMS frameworks, download handlers, and JavaScript libraries.
+2. **Security Relevance:** Technology identification assists in prioritizing software update requirements and defensive patch management.
 
 ---
 
-# Author
+### **5.3 Nslookup**
 
-**Tajalla Fatima**
-Batch : B083
-Cybersecurity Enthusiast | Interested in Cybersecurity, Ethical Hacking, Networking
+**Objective:** Perform domain name resolution.
+
+```bash
+nslookup example-lab.invalid
+```
+
+![Nslookup](images/nslookup.png)
+
+- **Sanitized Observation:** Resolved the target domain to a documentation-safe IP (`192.0.2.10`).
 
 ---
 
-# References
+### **5.4 Curl -I**
 
-Lab setup based on the provided Practical Lab Environment Setup for Pentesting, Ethical Hacking & Cybersecurity guide by NetworkWalks Academy.
+**Objective:** Inspect HTTP response headers.
+
+```bash
+curl -I https://example-lab.invalid
+```
+
+![Curl-I](images/curl.png)
+
+- **Sanitized Observation:** Returned HTTP status codes, web server headers, caching parameters, and active API endpoints.
+
+  ---
+
+  ### **5.5 Wafw00f**
+
+**Objective:** Detect Web Application Firewall (WAF) presence.
+
+```bash
+wafw00f example-lab.invalid
+```
+
+![Wafw00f](images/wafw00f.png)
+
+- **Sanitized Observation:** Detected active protection mechanisms (e.g., ModSecurity).
+
+---
+
+### **5.6 DNSRecon**
+
+**Objective:** Enumerate DNS zone details.
+
+```bash
+dnsrecon -d example-lab.invalid
+```
+
+![DNSRecon](images/dnsrecon.png)
+
+- **Sanitized Observation:** Successfully enumerated SOA, NS, A, TXT, and SRV records.
+
+---
+
+## **6. Module W2-PM5: Network Scanning with Zenmap**
+
+Network discovery was conducted to evaluate reachable assets and listening services within the authorized lab subnet (`192.0.2.0/24`).
+
+### **6.1 Local Network Identification**
+
+```cmd
+ipconfig
+```
+
+Retrieved the host interface parameters prior to scanning.
+
+### **6.2 Zenmap / Nmap Discovery**
+
+```bash
+nmap -sn 192.0.2.0/24
+```
+
+The scan detected 1 active host (`192.0.2.25`) with three open TCP services:
+
+| Sanitized Host | Port | State | Service | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 192.0.2.25 | 135/tcp | open | msrpc | Microsoft RPC Endpoint Mapper |
+| 192.0.2.25 | 139/tcp | open | netbios-ssn | NetBIOS Session Service |
+| 192.0.2.25 | 445/tcp | open | microsoft-ds | SMB File Sharing over IP |
+
+---
+
+### **6.3 Interpretation**
+
+Active ports 135, 139, and 445 indicate standard Windows network endpoints. Their detection highlights areas for administrative configuration review and service exposure auditing.
+
+**Safety Boundary:** No exploitation, password attacks, or unauthorized access attempts were conducted during this exercise.
+
+---
+
+## **7. Module W2-PM-FINAL: Risk Analysis & Impact**
+
+| # | Finding | Evidence / Observation | Potential Impact | Risk Level |
+| :-: | :--- | :--- | :--- | :-: |
+| **1** | Web Technology Information Exposed | WhatWeb identified application and server banners. | May assist adversaries in targeting version-specific vulnerabilities. | Medium |
+| **2** | Public DNS Record Exposure | DNSRecon returned comprehensive zone details. | Contributes to broader external infrastructure profiling. | Medium |
+| **3** | Multiple Open Network Services | Zenmap identified TCP 135, 139, and 445 on the host. | Unnecessary or unsegmented service exposure increases attack surface. | Medium |
+| **4** | Visible HTTP Metadata | Curl response headers revealed server details. | Provides information useful for reconnaissance mapping. | Low |
+| **5** | Identifiable WAF Protection | Wafw00f detected WAF defensive layers. | Informs analysis of existing perimeter defenses. | Low |
+
+---
+
+## **8. Recommendations & Mitigations**
+
+- **Header Suppression:** Suppress web server version banners and detailed software headers.
+- **SMB Hardening:** Restrict ports 135, 139, and 445 to trusted management networks via firewalls.
+- **Patch Management:** Maintain current patch levels across CMS engines and network services.
+- **Internal Discovery:** Perform periodic Nmap scans to maintain host and service inventory accuracy.
+- **DNS Auditing:** Audit published DNS records regularly to remove unneeded entry points.
+
+---
+
+## **9. Evidence Summary**
+
+| Evidence Item | Module | Used in Report | Sanitization |
+| :--- | :--- | :--- | :--- |
+| **WHOIS result** | W2-PM1 | Footprinting / Registration data | Registration identifiers omitted |
+| **WhatWeb result** | W2-PM1 | Technology fingerprinting | Live domain/IP omitted |
+| **Nslookup result** | W2-PM1 | DNS resolution | Replaced with 192.0.2.10 |
+| **Curl -I result** | W2-PM1 | HTTP-header review | Live domain identifiers omitted |
+| **Wafw00f result** | W2-PM1 | WAF detection | Target identifier omitted |
+| **DNSRecon result** | W2-PM1 | DNS enumeration | Live records/IPs omitted |
+| **Zenmap result** | W2-PM5 | Network discovery | Replaced with 192.0.2.0/24 range |
+
+---
+
+## **10. Conclusion**
+
+This Week 2 practical successfully fulfilled the requirements for elective module W2-PM1 (Footprinting with 6 Kali tools) and essential module W2-PM5 (Zenmap Network Scanning). The findings were documented and evaluated in accordance with W2-PM-FINAL reporting standards, reinforcing authorized, non-intrusive reconnaissance procedures.
+
+---
+
+# **Appendices**
+
+## **Appendix A – Command Reference**
+
+```bash
+# W2-PM1: Footprinting Commands
+
+whois example-lab.invalid
+
+whatweb example-lab.invalid
+
+nslookup example-lab.invalid
+
+curl -I https://example-lab.invalid
+
+wafw00f example-lab.invalid
+
+dnsrecon -d example-lab.invalid
+
+
+# W2-PM5: Network Scanning Commands
+
+ipconfig
+
+nmap -sn 192.0.2.0/24
+```
+
+---
+
+## **Appendix B – Sanitization Note**
+
+All target identifiers, domains, and IP addresses have been converted to synthetic documentation values (`example-lab.invalid` and `192.0.2.0/24`).
