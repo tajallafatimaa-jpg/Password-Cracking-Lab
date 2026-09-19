@@ -112,7 +112,7 @@ Identify publicly available domain-registration information and authoritative na
 whois example-lab.invalid
 ```
 
-![WHOIS](images/whois.png)
+![WHOIS](whois.png)
 
 1. **Sanitized Observation:** Demonstrated that WHOIS exposes registrar details, domain status, and name-server configurations.
 2. **Security Relevance:** Provides structural and administrative context regarding target domain ownership.
@@ -131,7 +131,7 @@ Fingerprint web technologies exposed by the target web application.
 whatweb example-lab.invalid
 ```
 
-![WhatWeb](images/whatweb.png)
+![WhatWeb](whatweb.png)
 
 1. **Sanitized Observation:** Identified web server components, CMS frameworks, download handlers, and JavaScript libraries.
 2. **Security Relevance:** Technology identification assists in prioritizing software update requirements and defensive patch management.
@@ -146,7 +146,7 @@ whatweb example-lab.invalid
 nslookup example-lab.invalid
 ```
 
-![Nslookup](images/nslookup.png)
+![Nslookup](nslookup.png)
 
 - **Sanitized Observation:** Resolved the target domain to a documentation-safe IP (`192.0.2.10`).
 
@@ -160,7 +160,7 @@ nslookup example-lab.invalid
 curl -I https://example-lab.invalid
 ```
 
-![Curl-I](images/curl.png)
+![Curl-I](curl.png)
 
 - **Sanitized Observation:** Returned HTTP status codes, web server headers, caching parameters, and active API endpoints.
 
@@ -174,7 +174,7 @@ curl -I https://example-lab.invalid
 wafw00f example-lab.invalid
 ```
 
-![Wafw00f](images/wafw00f.png)
+![Wafw00f](wafw00f.png)
 
 - **Sanitized Observation:** Detected active protection mechanisms (e.g., ModSecurity).
 
@@ -188,7 +188,7 @@ wafw00f example-lab.invalid
 dnsrecon -d example-lab.invalid
 ```
 
-![DNSRecon](images/dnsrecon.png)
+![DNSRecon](dnsrecon.png)
 
 - **Sanitized Observation:** Successfully enumerated SOA, NS, A, TXT, and SRV records.
 
