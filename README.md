@@ -19,15 +19,19 @@ Password cracking is the process of recovering a password from stored data or a 
 **Task:** Crack the password of `My Locked PDF1.pdf` using JTR John and JTR Johnny on Windows.
 
 ### Tools:
-* **John the Ripper** (jumbo build, Windows binaries)
-* **Johnny** — GUI front-end for John the Ripper
-* **OnlineHashCrack PDF Hash Extractor** — pulls the crackable hash out of the PDF
+* [John the Ripper](https://openwall.com) (jumbo build, Windows binaries)
+* [Johnny GUI](https://github.com) — GUI front-end for John the Ripper
+* [OnlineHashCrack PDF Hash Extractor](https://onlinehashcrack.com) — pulls the crackable hash out of the PDF
 
 ### Steps:
 1. Downloaded **John the Ripper** (jumbo, Windows x64) and installed the **Johnny GUI**, pointing Johnny's settings at `john.exe` inside the extracted `run` folder.
 2. Uploaded `My Locked PDF1.pdf` to the **OnlineHashCrack PDF Hash Extractor** to convert the file's password protection into a crackable hash (`pdf2john` / `pdf2hashcat` format).
 3. Copied the resulting hash — starting with `$pdf$*...` — into Notepad and saved it as `hash1.txt`.
 4. In **Johnny**: Opened password file → selected `hash1.txt`. The hash loaded correctly, formatted as `PDF`.
+
+<!-- 1. JOHNNY SETTINGS SCREENSHOT -->
+![Johnny Tool Settings](YAHAN_IMAGE_KA_LINK_DALEIN)
+
 5. Clicked **Start new attack** and let Johnny/John run its default cracking mode against the hash.
 6. John recovered the password within the run; Johnny displayed it directly in the password column.
 7. Opened `My Locked PDF1.pdf` in Adobe Acrobat Reader and entered the recovered password to confirm it unlocked the document.
@@ -36,6 +40,9 @@ Password cracking is the process of recovering a password from stored data or a 
 * **Status:** Password cracked successfully.
 * **Recovered Password:** `password1`
 * **Captured Flag:** `nw{networkwalks_flag1_jtr_210921_1}`
+
+<!-- 2. LAB 1 SUCCESS RESULT SCREENSHOT -->
+![Lab 1 Success Result](YAHAN_IMAGE_KA_LINK_DALEIN)
 
 ### Learnings:
 * `pdf2john` (or an equivalent online extractor) bridges PDF password protection into a format John understands.
@@ -49,8 +56,8 @@ Password cracking is the process of recovering a password from stored data or a 
 **Task:** Crack the password of `My Locked PDF1.pdf` using the NetworkWalks Hash Calculator and Password Cracker (both free, browser-based, no install required).
 
 ### Tools:
-* **NetworkWalks Hash Calculator** — generates MD5/SHA family hashes and extracts a crackable hash from a password-protected PDF, all client-side in the browser.
-* **NetworkWalks Password Cracker** — runs a dictionary attack against a pasted `$pdf$` hash, either with its built-in 100-word list or an uploaded wordlist.
+* [NetworkWalks Hash Calculator](https://networkwalks.com) — generates MD5/SHA family hashes and extracts a crackable hash from a password-protected PDF, all client-side in the browser.
+* [NetworkWalks Password Cracker](https://networkwalks.com) — runs a dictionary attack against a pasted `$pdf$` hash, either with its built-in 100-word list or an uploaded wordlist.
 
 ### Steps:
 1. Downloaded the encrypted PDF (`My Locked PDF1.pdf`) from the lab page.
@@ -59,7 +66,11 @@ Password cracking is the process of recovering a password from stored data or a 
 4. Copied the full hash value.
 5. Opened the **NetworkWalks Password Cracker**, pasted the hash into the **PDF HASH** field.
 6. Left the built-in 100-password list active and clicked **Start Cracking**.
-7. Watched the tool try candidate passwords (`service`, `canada`, `hockey`, `killer`, `george`, `asdfgh`, `xxxxxx`, `qwertyuiop`, `111222`, ...) live in the console output.
+7. Watched the tool try candidate passwords live in the console output.
+
+<!-- 3. LAB 2 CRACKING CONSOLE SCREENSHOT -->
+![Browser Tool Cracking Console](YAHAN_IMAGE_KA_LINK_DALEIN)
+
 8. On try **#91** it matched: `[+] MATCH password1`. The tool displayed **"PASSWORD CRACKED SUCCESSFULLY — password1"**.
 9. Opened `My Locked PDF1.pdf` and entered `password1` to unlock it, confirming the crack.
 
@@ -67,6 +78,12 @@ Password cracking is the process of recovering a password from stored data or a 
 * **Status:** Password cracked successfully (matched at 91/100 words tried, ~9 passwords/sec).
 * **Recovered Password:** `password1`
 * **Captured Flag:** `nw{networkwalks_persistence_270621}`
+
+<!-- 4. LAB 2 SUCCESS RESULT SCREENSHOT -->
+![Lab 2 Success and Flag](YAHAN_IMAGE_KA_LINK_DALEIN)
+
+<!-- 5. FINAL CONGRATULATIONS / FLAG CERTIFICATE SCREENSHOT -->
+![Congratulations Flag Certificate](YAHAN_IMAGE_KA_LINK_DALEIN)
 
 ### Learnings:
 * Both NetworkWalks tools run entirely client-side (**Web Crypto API** for hashing) — no file or text is uploaded to a server, per the tool's own disclosure.
@@ -76,4 +93,4 @@ Password cracking is the process of recovering a password from stored data or a 
 
 ## References
 
-* [NetworkWalks Official Website](https://networkwalks.com)
+* [www.networkwalks.com](https://networkwalks.com)
