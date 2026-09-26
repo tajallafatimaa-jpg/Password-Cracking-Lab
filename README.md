@@ -30,7 +30,7 @@ Password cracking is the process of recovering a password from stored data or a 
 4. In **Johnny**: Opened password file → selected `hash1.txt`. The hash loaded correctly, formatted as `PDF`.
 
 <!-- 1. JOHNNY SETTINGS SCREENSHOT -->
-![Johnny Tool Settings](images/1-johnny-settings.png)
+![Johnny Tool Settings](1-johnny-settings.png)
 
 5. Clicked **Start new attack** and let Johnny/John run its default cracking mode against the hash.
 6. John recovered the password within the run; Johnny displayed it directly in the password column.
@@ -42,7 +42,7 @@ Password cracking is the process of recovering a password from stored data or a 
 * **Captured Flag:** `nw{cybersecurity_flag_captured_2608}`
 
 <!-- 2. LAB 1 SUCCESS RESULT SCREENSHOT -->
-![Lab 1 Success Result](images/2-lab1-success-flag.png)
+![Lab 1 Success Result](2-lab1-success-flag.png)
 
 ### Learnings:
 * `pdf2john` (or an equivalent online extractor) bridges PDF password protection into a format John understands.
@@ -65,7 +65,7 @@ Password cracking is the process of recovering a password from stored data or a 
 3. Uploaded the locked PDF. The tool parsed it locally in the browser and reported it as encrypted, extracting a crackable hash.
 
 <!-- 3. LAB 2 HASH CALCULATOR SCREENSHOT -->
-![NetworkWalks Hash Calculator](images/3-hash-calculator.png)
+![NetworkWalks Hash Calculator](3-hash-calculator.png)
 
 4. Copied the full hash value.
 5. Opened the **NetworkWalks Password Cracker**, pasted the hash into the **PDF HASH** field.
@@ -74,7 +74,7 @@ Password cracking is the process of recovering a password from stored data or a 
 8. On try **#91** it matched: `[+] MATCH password1`. The tool displayed **"PASSWORD CRACKED SUCCESSFULLY — password1"**.
 
 <!-- 4. LAB 2 CRACKING CONSOLE SCREENSHOT -->
-![Browser Tool Cracking Console](images/4-password-cracker-success.png)
+![Browser Tool Cracking Console](4-password-cracker-success.png)
 
 9. Opened `My Locked PDF1.pdf` and entered `password1` to unlock it, confirming the crack.
 
@@ -84,7 +84,7 @@ Password cracking is the process of recovering a password from stored data or a 
 * **Captured Flag:** `nw{networkwalks_flag_260821_1}`
 
 <!-- 5. FINAL CONGRATULATIONS / FLAG CERTIFICATE SCREENSHOT -->
-![Congratulations Flag Certificate](images/5-lab2-final-flag.png)
+![Congratulations Flag Certificate](5-lab2-final-flag.png)
 
 ### Learnings:
 * Both NetworkWalks tools run entirely client-side (**Web Crypto API** for hashing) — no file or text is uploaded to a server, per the tool's own disclosure.
