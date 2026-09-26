@@ -1,306 +1,79 @@
-# PENETRATION-TESTING-REPORT
-## FOOTPRINTING & NETWORK SCANNING
+# Password-Cracking-Labs
 
-**Week 2 • Cybersecurity / Ethical Hacking Practical**
+Write-ups documenting my completion of the initial project modules from the **NetworkWalks Academy Cybersecurity & Ethical Hacking** course. All labs use a training file provided by the course (`My Locked PDF1.pdf` / `networkwalks_flag1.pdf`) — a password-protected PDF whose password is intentionally weak, for the purpose of learning password-auditing techniques.
 
----
-
-## 📋 Report Details
-
-| Report Field | Details |
-| :--- | :--- |
-| **Analyst** | Tajalla Fatima |
-| **Practical Focus** | Footprinting & reconnaissance, network discovery |
-| **Primary Platforms** | Kali Linux and Windows |
-| **Tools Covered** | WHOIS, WhatWeb, Nslookup, Curl, Wafw00f, DNSRecon, Zenmap |
-| **Assessment Scope** | Authorized educational lab / controlled environment |
-| **Sanitization** | Live IPs, domains, emails and other identifiers replaced with documentation-safe values |
-| **Report Status** | Sanitized submission-ready draft |
-
-> **Authorization & Safety Notice:**  
-> All reconnaissance and scanning activities described in this report are presented as authorized educational exercises. The report uses documentation-only values so that the final document does not expose live infrastructure details. Prepared for educational and portfolio use.
+> ⚠️ **Scope & ethics note:** These exercises were performed on a sample file supplied for training purposes by the course provider, in a lab/VM environment. Password cracking should only ever be performed on files/systems you own or are explicitly authorized to test.
 
 ---
 
-# 1. Executive Summary
+## Background
 
-This practical exercise covered two complementary cybersecurity activities: passive and low-impact footprinting of a web-domain environment, followed by local network discovery with Zenmap. The work demonstrated how a security professional can move from publicly observable information to a structured view of hosts and services without attempting exploitation.
+Password cracking is the process of recovering a password from stored data or a protected file, used by security professionals to test password strength. Files such as PDF, ZIP, and Office documents store their password as a **hash** — a one-way scrambled representation. To recover the password you extract that hash from the file, then run it through a cracking tool that hashes candidate words/passwords and compares them against it (a **dictionary attack**).
 
-The practical evidence included the use of WHOIS, WhatWeb, Nslookup, Curl, Wafw00f and DNSRecon for reconnaissance activities.
-
-## Key Outcomes
-
-| Area | Outcome |
-| :--- | :--- |
-| **Domain Footprinting** | Collected registration, DNS, web-technology, HTTP-header and WAF observations using Kali Linux tools. |
-| **Network Discovery** | Practiced network discovery and service identification in an authorized lab environment. |
-| **Risk Interpretation** | Converted observations into potential security considerations without automatically treating every observation as a vulnerability. |
-| **Data Protection** | Used documentation-safe values for the final report. |
+* **Target file:** `My Locked PDF1.pdf` (a.k.a. `networkwalks_flag1.pdf`), 65.2 KB, PDF encryption revision 4 / V4, 128-bit key.
 
 ---
 
-# 2. Objectives
+## Lab 1 — Password Cracking with John the Ripper (JTR) & Johnny
 
-- Understand the purpose of footprinting before active security testing.
-- Practice common Kali Linux reconnaissance commands and interpret their outputs.
-- Understand DNS and web-technology reconnaissance.
-- Practice HTTP header inspection.
-- Understand Web Application Firewall detection.
-- Understand DNS enumeration.
-- Use network scanning concepts in an authorized lab environment.
-- Document evidence, security implications and recommendations professionally.
-- Produce a sanitized cybersecurity practical report.
+**Task:** Crack the password of `My Locked PDF1.pdf` using JTR John and JTR Johnny on Windows.
 
----
+### Tools:
+* **John the Ripper** (jumbo build, Windows binaries)
+* **Johnny** — GUI front-end for John the Ripper
+* **OnlineHashCrack PDF Hash Extractor** — pulls the crackable hash out of the PDF
 
-# 3. Scope, Authorization & Methodology
+### Steps:
+1. Downloaded **John the Ripper** (jumbo, Windows x64) and installed the **Johnny GUI**, pointing Johnny's settings at `john.exe` inside the extracted `run` folder.
+2. Uploaded `My Locked PDF1.pdf` to the **OnlineHashCrack PDF Hash Extractor** to convert the file's password protection into a crackable hash (`pdf2john` / `pdf2hashcat` format).
+3. Copied the resulting hash — starting with `$pdf$*...` — into Notepad and saved it as `hash1.txt`.
+4. In **Johnny**: Opened password file → selected `hash1.txt`. The hash loaded correctly, formatted as `PDF`.
+5. Clicked **Start new attack** and let Johnny/John run its default cracking mode against the hash.
+6. John recovered the password within the run; Johnny displayed it directly in the password column.
+7. Opened `My Locked PDF1.pdf` in Adobe Acrobat Reader and entered the recovered password to confirm it unlocked the document.
 
-The activities described in this report are framed as an authorized educational cybersecurity lab.
+### Result:
+* **Status:** Password cracked successfully.
+* **Recovered Password:** `password1`
+* **Captured Flag:** `nw{networkwalks_flag1_jtr_210921_1}`
 
-Testing was limited to systems and environments for which authorization was available.
-
-| Phase | Module | Activity | Primary Tools | Evidence Type |
-| :--- | :--- | :--- | :--- | :--- |
-| **Phase 1** | W2-PM1 | Footprinting / Reconnaissance | WHOIS, WhatWeb, Nslookup, Curl, Wafw00f, DNSRecon | Terminal outputs |
-| **Phase 2** | W2-PM5 | Network Discovery | ipconfig, Zenmap/Nmap | Scan output |
-| **Phase 3** | W2-PM-FINAL | Risk Interpretation | Manual analysis | Risk register |
-| **Phase 4** | W2-PM-FINAL | Recommendations | Manual analysis | Mitigation guidance |
-
-## Sanitization Standard
-
-To reduce accidental data exposure, this report uses documentation-safe domains, IP addresses and identifiers.
-
-Example documentation range:
-
-`192.0.2.0/24`
-
-> **Important:** Sanitized values are placeholders for documentation and do not represent real-world target systems.
+### Learnings:
+* `pdf2john` (or an equivalent online extractor) bridges PDF password protection into a format John understands.
+* Johnny is just a GUI wrapper around the John the Ripper binary; all the cracking work happens in `john.exe`.
+* A weak, dictionary-word password like `password1` is cracked almost instantly — reinforcing why longer, non-dictionary passwords matter.
 
 ---
 
-# 4. Tools Used
+## Lab 2 — Password Cracking with NetworkWalks Browser Tools
 
-| Tool | Module | Purpose |
-| :--- | :--- | :--- |
-| **Kali Linux** | W2-PM1 | Operating environment for reconnaissance commands. |
-| **WHOIS** | W2-PM1 | Review publicly available domain-registration information and name servers. |
-| **WhatWeb** | W2-PM1 | Fingerprint web technologies and server/application indicators. |
-| **Nslookup** | W2-PM1 | Resolve a domain name through DNS. |
-| **Curl -I** | W2-PM1 | Inspect HTTP response headers. |
-| **Wafw00f** | W2-PM1 | Identify detectable Web Application Firewall protection. |
-| **DNSRecon** | W2-PM1 | Enumerate DNS record information. |
-| **Zenmap / Nmap** | W2-PM5 | Discover live hosts and visible services in an authorized network. |
-| **Windows ipconfig** | W2-PM5 | Identify local host IP configuration before scanning. |
+**Task:** Crack the password of `My Locked PDF1.pdf` using the NetworkWalks Hash Calculator and Password Cracker (both free, browser-based, no install required).
 
----
+### Tools:
+* **NetworkWalks Hash Calculator** — generates MD5/SHA family hashes and extracts a crackable hash from a password-protected PDF, all client-side in the browser.
+* **NetworkWalks Password Cracker** — runs a dictionary attack against a pasted `$pdf$` hash, either with its built-in 100-word list or an uploaded wordlist.
 
-# 5. Module W2-PM1: Footprinting & Reconnaissance
+### Steps:
+1. Downloaded the encrypted PDF (`My Locked PDF1.pdf`) from the lab page.
+2. Opened the **NetworkWalks Hash Calculator** and switched to the **PDF** tab.
+3. Uploaded the locked PDF. The tool parsed it locally in the browser and reported it as encrypted, extracting a crackable hash.
+4. Copied the full hash value.
+5. Opened the **NetworkWalks Password Cracker**, pasted the hash into the **PDF HASH** field.
+6. Left the built-in 100-password list active and clicked **Start Cracking**.
+7. Watched the tool try candidate passwords (`service`, `canada`, `hockey`, `killer`, `george`, `asdfgh`, `xxxxxx`, `qwertyuiop`, `111222`, ...) live in the console output.
+8. On try **#91** it matched: `[+] MATCH password1`. The tool displayed **"PASSWORD CRACKED SUCCESSFULLY — password1"**.
+9. Opened `My Locked PDF1.pdf` and entered `password1` to unlock it, confirming the crack.
 
-The footprinting phase utilized six Kali Linux reconnaissance tools to examine registration information, DNS information, web technologies, HTTP metadata and WAF detection.
+### Result:
+* **Status:** Password cracked successfully (matched at 91/100 words tried, ~9 passwords/sec).
+* **Recovered Password:** `password1`
+* **Captured Flag:** `nw{networkwalks_persistence_270621}`
 
----
-
-## **5.1 WHOIS**
-
-### **Objective**
-
-Identify publicly available domain-registration information and authoritative name servers.
-
-### **Command**
-
-```bash
-whois example-lab.invalid
-```
-
-![WHOIS](whois.png)
-
-1. **Sanitized Observation:** Demonstrated that WHOIS exposes registrar details, domain status, and name-server configurations.
-2. **Security Relevance:** Provides structural and administrative context regarding target domain ownership.
+### Learnings:
+* Both NetworkWalks tools run entirely client-side (**Web Crypto API** for hashing) — no file or text is uploaded to a server, per the tool's own disclosure.
+* This mirrors the JTR workflow from Lab 1 conceptually (extract hash → dictionary attack) but packages it as a two-step, no-install browser experience for beginners.
 
 ---
 
-## **5.2 WhatWeb**
+## References
 
-### **Objective**
-
-Fingerprint web technologies exposed by the target web application.
-
-### **Command**
-
-```bash
-whatweb example-lab.invalid
-```
-
-![WhatWeb](whatweb.png)
-
-1. **Sanitized Observation:** Identified web server components, CMS frameworks, download handlers, and JavaScript libraries.
-2. **Security Relevance:** Technology identification assists in prioritizing software update requirements and defensive patch management.
-
----
-
-### **5.3 Nslookup**
-
-**Objective:** Perform domain name resolution.
-
-```bash
-nslookup example-lab.invalid
-```
-
-![Nslookup](nslookup.png)
-
-- **Sanitized Observation:** Resolved the target domain to a documentation-safe IP (`192.0.2.10`).
-
----
-
-### **5.4 Curl -I**
-
-**Objective:** Inspect HTTP response headers.
-
-```bash
-curl -I https://example-lab.invalid
-```
-
-![Curl-I](curl.png)
-
-- **Sanitized Observation:** Returned HTTP status codes, web server headers, caching parameters, and active API endpoints.
-
-  ---
-
-  ### **5.5 Wafw00f**
-
-**Objective:** Detect Web Application Firewall (WAF) presence.
-
-```bash
-wafw00f example-lab.invalid
-```
-
-![Wafw00f](wafw00f.png)
-
-- **Sanitized Observation:** Detected active protection mechanisms (e.g., ModSecurity).
-
----
-
-### **5.6 DNSRecon**
-
-**Objective:** Enumerate DNS zone details.
-
-```bash
-dnsrecon -d example-lab.invalid
-```
-
-![DNSRecon](dnsrecon.png)
-
-- **Sanitized Observation:** Successfully enumerated SOA, NS, A, TXT, and SRV records.
-
----
-
-## **6. Module W2-PM5: Network Scanning with Zenmap**
-
-Network discovery was conducted to evaluate reachable assets and listening services within the authorized lab subnet (`192.0.2.0/24`).
-
-### **6.1 Local Network Identification**
-
-```cmd
-ipconfig
-```
-
-Retrieved the host interface parameters prior to scanning.
-
-### **6.2 Zenmap / Nmap Discovery**
-
-```bash
-nmap -sn 192.0.2.0/24
-```
-
-The scan detected 1 active host (`192.0.2.25`) with three open TCP services:
-
-| Sanitized Host | Port | State | Service | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| 192.0.2.25 | 135/tcp | open | msrpc | Microsoft RPC Endpoint Mapper |
-| 192.0.2.25 | 139/tcp | open | netbios-ssn | NetBIOS Session Service |
-| 192.0.2.25 | 445/tcp | open | microsoft-ds | SMB File Sharing over IP |
-
----
-
-### **6.3 Interpretation**
-
-Active ports 135, 139, and 445 indicate standard Windows network endpoints. Their detection highlights areas for administrative configuration review and service exposure auditing.
-
-**Safety Boundary:** No exploitation, password attacks, or unauthorized access attempts were conducted during this exercise.
-
----
-
-## **7. Module W2-PM-FINAL: Risk Analysis & Impact**
-
-| # | Finding | Evidence / Observation | Potential Impact | Risk Level |
-| :-: | :--- | :--- | :--- | :-: |
-| **1** | Web Technology Information Exposed | WhatWeb identified application and server banners. | May assist adversaries in targeting version-specific vulnerabilities. | Medium |
-| **2** | Public DNS Record Exposure | DNSRecon returned comprehensive zone details. | Contributes to broader external infrastructure profiling. | Medium |
-| **3** | Multiple Open Network Services | Zenmap identified TCP 135, 139, and 445 on the host. | Unnecessary or unsegmented service exposure increases attack surface. | Medium |
-| **4** | Visible HTTP Metadata | Curl response headers revealed server details. | Provides information useful for reconnaissance mapping. | Low |
-| **5** | Identifiable WAF Protection | Wafw00f detected WAF defensive layers. | Informs analysis of existing perimeter defenses. | Low |
-
----
-
-## **8. Recommendations & Mitigations**
-
-- **Header Suppression:** Suppress web server version banners and detailed software headers.
-- **SMB Hardening:** Restrict ports 135, 139, and 445 to trusted management networks via firewalls.
-- **Patch Management:** Maintain current patch levels across CMS engines and network services.
-- **Internal Discovery:** Perform periodic Nmap scans to maintain host and service inventory accuracy.
-- **DNS Auditing:** Audit published DNS records regularly to remove unneeded entry points.
-
----
-
-## **9. Evidence Summary**
-
-| Evidence Item | Module | Used in Report | Sanitization |
-| :--- | :--- | :--- | :--- |
-| **WHOIS result** | W2-PM1 | Footprinting / Registration data | Registration identifiers omitted |
-| **WhatWeb result** | W2-PM1 | Technology fingerprinting | Live domain/IP omitted |
-| **Nslookup result** | W2-PM1 | DNS resolution | Replaced with 192.0.2.10 |
-| **Curl -I result** | W2-PM1 | HTTP-header review | Live domain identifiers omitted |
-| **Wafw00f result** | W2-PM1 | WAF detection | Target identifier omitted |
-| **DNSRecon result** | W2-PM1 | DNS enumeration | Live records/IPs omitted |
-| **Zenmap result** | W2-PM5 | Network discovery | Replaced with 192.0.2.0/24 range |
-
----
-
-## **10. Conclusion**
-
-This Week 2 practical successfully fulfilled the requirements for elective module W2-PM1 (Footprinting with 6 Kali tools) and essential module W2-PM5 (Zenmap Network Scanning). The findings were documented and evaluated in accordance with W2-PM-FINAL reporting standards, reinforcing authorized, non-intrusive reconnaissance procedures.
-
----
-
-# **Appendices**
-
-## **Appendix A – Command Reference**
-
-```bash
-# W2-PM1: Footprinting Commands
-
-whois example-lab.invalid
-
-whatweb example-lab.invalid
-
-nslookup example-lab.invalid
-
-curl -I https://example-lab.invalid
-
-wafw00f example-lab.invalid
-
-dnsrecon -d example-lab.invalid
-
-
-# W2-PM5: Network Scanning Commands
-
-ipconfig
-
-nmap -sn 192.0.2.0/24
-```
-
----
-
-## **Appendix B – Sanitization Note**
-
-All target identifiers, domains, and IP addresses have been converted to synthetic documentation values (`example-lab.invalid` and `192.0.2.0/24`).
+* [NetworkWalks Official Website](https://networkwalks.com)
